@@ -41,12 +41,39 @@ var (
 		id bigint not null,
 		msg varchar(64),
 		primary key (id)
-		) Engine=InnoDB
+		) Engine=InnoDB;
+
+		create table vt_select_test_2 (
+		id bigint not null,
+		msg varchar(64),
+		primary key (id)
+		) Engine=InnoDB	
 		`
+
+	sqlSchema2 = `
+		create table vt_select_test_2 (
+		id bigint not null,
+		msg varchar(64),
+		primary key (id)
+		) Engine=InnoDB;
+
+		create table vt_select_test (
+		id bigint not null,
+		msg varchar(64),
+		primary key (id)
+		) Engine=InnoDB	
+		`
+
 	sqlSchemaReverse = `
 		create table vt_select_test (
 		msg varchar(64),
 		id bigint not null,
+		primary key (id)
+		) Engine=InnoDB;
+		
+		create table vt_select_test_2 (
+		id bigint not null,
+		msg varchar(64),
 		primary key (id)
 		) Engine=InnoDB
 		`
@@ -60,6 +87,14 @@ var (
 		  },
 		  "tables": {
 			"vt_select_test": {
+			   "column_vindexes": [
+				{
+				  "column": "id",
+				  "name": "hash_index"
+				}
+			  ] 
+			},
+			"vt_select_test_2": {
 			   "column_vindexes": [
 				{
 				  "column": "id",
@@ -113,7 +148,7 @@ func TestShardedKeyspace(t *testing.T) {
 	// are the same.
 	_, err := shard1Master.VttabletProcess.QueryTablet(sqlSchema, keyspaceName, true)
 	require.Nil(t, err)
-	_, err = shard1.Vttablets[1].VttabletProcess.QueryTablet(sqlSchema, keyspaceName, true)
+	_, err = shard1.Vttablets[1].VttabletProcess.QueryTablet(sqlSchema2, keyspaceName, true)
 	require.Nil(t, err)
 
 	//apply the schema on the second shard.
