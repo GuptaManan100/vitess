@@ -59,7 +59,12 @@ func main() {
 		exit.Return(1)
 	}
 
-	astWalkResult := visitorgen.Walk(file)
+	astWalkResult, err := visitorgen.Walk(file)
+	if err != nil {
+		log.Error(err)
+		exit.Return(1)
+	}
+
 	vp := visitorgen.Transform(astWalkResult)
 	vd := visitorgen.ToVisitorPlan(vp)
 

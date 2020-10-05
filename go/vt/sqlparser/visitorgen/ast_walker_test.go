@@ -39,7 +39,7 @@ type Nodeiface interface {
 	ast, err := parser.ParseFile(fset, "ast.go", input, 0)
 	require.NoError(t, err)
 
-	result := Walk(ast)
+	result, _ := Walk(ast)
 	expected := SourceFile{
 		lines: []Sast{&InterfaceDeclaration{
 			name:  "Nodeiface",
@@ -60,7 +60,7 @@ type Empty struct {}
 	ast, err := parser.ParseFile(fset, "ast.go", input, 0)
 	require.NoError(t, err)
 
-	result := Walk(ast)
+	result, _ := Walk(ast)
 	expected := SourceFile{
 		lines: []Sast{&StructDeclaration{
 			name:   "Empty",
@@ -68,6 +68,28 @@ type Empty struct {}
 		}},
 	}
 	assert.Equal(t, expected.String(), result.String())
+}
+
+func TestEmbeddedInterfaces(t *testing.T) {
+	input := `
+	package sqlparser
+	
+	type innerInterface2 interface {
+		function1()
+	}
+
+	type Nodeiface interface {
+		iNode()
+		innerInterface2
+		SQLNode
+	}
+`
+	fset := token.NewFileSet()
+	ast, err := parser.ParseFile(fset, "ast.go", input, 0)
+	require.NoError(t, err)
+
+	_, err = Walk(ast)
+	require.Error(t, err)
 }
 
 func TestStructWithStringField(t *testing.T) {
@@ -83,7 +105,7 @@ type Struct struct {
 	ast, err := parser.ParseFile(fset, "ast.go", input, 0)
 	require.NoError(t, err)
 
-	result := Walk(ast)
+	result, _ := Walk(ast)
 	expected := SourceFile{
 		lines: []Sast{&StructDeclaration{
 			name: "Struct",
@@ -112,7 +134,7 @@ type Struct struct {
 	ast, err := parser.ParseFile(fset, "ast.go", input, 0)
 	require.NoError(t, err)
 
-	result := Walk(ast)
+	result, _ := Walk(ast)
 	expected := SourceFile{
 		lines: []Sast{&StructDeclaration{
 			name: "Struct",
@@ -147,7 +169,7 @@ type Struct struct {
 	ast, err := parser.ParseFile(fset, "ast.go", input, 0)
 	require.NoError(t, err)
 
-	result := Walk(ast)
+	result, _ := Walk(ast)
 	expected := SourceFile{
 		lines: []Sast{&StructDeclaration{
 			name: "Struct",
@@ -176,7 +198,7 @@ func (*Empty) method() {}
 	ast, err := parser.ParseFile(fset, "ast.go", input, 0)
 	require.NoError(t, err)
 
-	result := Walk(ast)
+	result, _ := Walk(ast)
 	expected := SourceFile{
 		lines: []Sast{
 			&StructDeclaration{
@@ -207,7 +229,7 @@ type Strings []string
 	ast, err := parser.ParseFile(fset, "ast.go", input, 0)
 	require.NoError(t, err)
 
-	result := Walk(ast)
+	result, _ := Walk(ast)
 	expected := SourceFile{
 		lines: []Sast{&TypeAlias{
 			name: "Strings",
@@ -228,7 +250,7 @@ type String string
 	ast, err := parser.ParseFile(fset, "ast.go", input, 0)
 	require.NoError(t, err)
 
-	result := Walk(ast)
+	result, _ := Walk(ast)
 	expected := SourceFile{
 		lines: []Sast{&TypeAlias{
 			name: "String",

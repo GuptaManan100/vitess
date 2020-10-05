@@ -17,6 +17,7 @@ limitations under the License.
 package visitorgen
 
 import (
+	"fmt"
 	"go/ast"
 	"reflect"
 )
@@ -25,13 +26,17 @@ var _ ast.Visitor = (*walker)(nil)
 
 type walker struct {
 	result SourceFile
+	err    error
 }
 
 // Walk walks the given AST and translates it to the simplified AST used by the next steps
-func Walk(node ast.Node) *SourceFile {
+func Walk(node ast.Node) (*SourceFile, error) {
 	var w walker
 	ast.Walk(&w, node)
-	return &w.result
+	if w.err != nil {
+		return nil, w.err
+	}
+	return &w.result, nil
 }
 
 // Visit implements the ast.Visitor interface
@@ -40,6 +45,14 @@ func (w *walker) Visit(node ast.Node) ast.Visitor {
 	case *ast.TypeSpec:
 		switch t2 := n.Type.(type) {
 		case *ast.InterfaceType:
+			for _, m := range t2.Methods.List {
+				switch x := m.Type.(type) {
+				case *ast.Ident:
+					if x.Name != "SQLNode" {
+						w.err = fmt.Errorf("Error in %v Embedded Interfaces not supported %v", n.Name, x.Name)
+					}
+				}
+			}
 			w.append(&InterfaceDeclaration{
 				name:  n.Name.Name,
 				block: "",

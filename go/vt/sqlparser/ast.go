@@ -697,7 +697,8 @@ type (
 	// It can be ValTuple, Subquery, ListArg.
 	ColTuple interface {
 		iColTuple()
-		Expr
+		iExpr()
+		SQLNode
 	}
 
 	// ListArg represents a named list argument.
