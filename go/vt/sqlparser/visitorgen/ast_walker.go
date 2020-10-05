@@ -45,17 +45,28 @@ func (w *walker) Visit(node ast.Node) ast.Visitor {
 	case *ast.TypeSpec:
 		switch t2 := n.Type.(type) {
 		case *ast.InterfaceType:
+			iface := InterfaceDeclaration{
+				name: n.Name.Name,
+			}
 			for _, m := range t2.Methods.List {
 				switch x := m.Type.(type) {
 				case *ast.Ident:
 					if x.Name != "SQLNode" {
 						w.err = fmt.Errorf("Error in %v Embedded Interfaces not supported %v", n.Name, x.Name)
 					}
+				case *ast.FuncType:
+					if len(m.Names) != 1 {
+						panic(fmt.Sprintf("More than 1 name in %v", n.Name))
+					}
+					iface.funcs = append(iface.funcs, FunctionSignature{
+						name: m.Names[0].Name,
+						args: x.Params.List,
+					})
+				default:
+					panic(fmt.Sprintf("Unknown type %T in %v", x, n.Name))
 				}
 			}
-			w.append(&InterfaceDeclaration{
-				name: n.Name.Name,
-			})
+			w.append(&iface)
 		case *ast.StructType:
 			var fields []*Field
 			for _, f := range t2.Fields.List {
@@ -110,10 +121,11 @@ func (w *walker) Visit(node ast.Node) ast.Visitor {
 		}
 
 		w.append(&FuncDeclaration{
-			receiver:  f,
-			name:      n.Name.Name,
-			block:     "",
-			arguments: nil,
+			receiver: f,
+			signature: FunctionSignature{
+				name: n.Name.Name,
+				args: nil,
+			},
 		})
 	}
 
@@ -139,4 +151,16 @@ func sastType(e ast.Expr) Type {
 	}
 
 	panic(reflect.TypeOf(e))
+}
+
+func CreateArgs(field []ast.Field) []Field {
+
+	var result []Field
+	for _, param := range field {
+		result = append(result, Field{
+			name: "",
+			typ:  nil,
+		})
+	}
+	return result
 }

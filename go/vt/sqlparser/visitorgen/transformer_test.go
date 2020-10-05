@@ -45,9 +45,10 @@ func TestSimplestAst(t *testing.T) {
 					name: "",
 					typ:  &Ref{&TypeString{"NodeStruct"}},
 				},
-				name:      "iNode",
-				block:     "",
-				arguments: []*Field{}},
+				signature: FunctionSignature{
+					name: "iNode",
+					args: []*Field{}},
+			},
 		},
 	}
 
@@ -86,9 +87,11 @@ func TestAstWithArray(t *testing.T) {
 					name: "",
 					typ:  &Ref{&TypeString{"NodeArray"}},
 				},
-				name:      "iNode",
-				block:     "",
-				arguments: []*Field{}},
+				signature: FunctionSignature{
+					name: "iNode",
+					args: []*Field{},
+				},
+			},
 		},
 	}
 

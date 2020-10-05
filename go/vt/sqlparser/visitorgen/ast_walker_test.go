@@ -208,9 +208,10 @@ func (*Empty) method() {}
 					name: "",
 					typ:  &Ref{&TypeString{"Empty"}},
 				},
-				name:      "method",
-				block:     "",
-				arguments: []*Field{},
+				signature: FunctionSignature{
+					name: "method",
+					args: []*Field{},
+				},
 			},
 		},
 	}

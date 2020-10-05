@@ -32,7 +32,8 @@ type (
 	// InterfaceDeclaration represents a declaration of an interface. This is used to keep track of which types
 	// need to be handled by the visitor framework
 	InterfaceDeclaration struct {
-		name string
+		name  string
+		funcs []FunctionSignature
 	}
 
 	// TypeAlias is used whenever we see a `type XXX YYY` - XXX is the new name for YYY.
@@ -42,11 +43,15 @@ type (
 		typ  Type
 	}
 
+	FunctionSignature struct {
+		name string
+		args []*Field
+	}
+
 	// FuncDeclaration represents a function declaration. These are tracked to know which types implement interfaces.
 	FuncDeclaration struct {
-		receiver    *Field
-		name, block string
-		arguments   []*Field
+		receiver  *Field
+		signature FunctionSignature
 	}
 
 	// StructDeclaration represents a struct. It contains the fields and their types
@@ -122,14 +127,14 @@ func (f *FuncDeclaration) toSastString() string {
 		receiver = "(" + f.receiver.String() + ") "
 	}
 	var args string
-	for i, arg := range f.arguments {
+	for i, arg := range f.signature.args {
 		if i > 0 {
 			args += ", "
 		}
 		args += arg.String()
 	}
 
-	return "func " + receiver + f.name + "(" + args + ") {" + blockInNewLines(f.block) + "}"
+	return "func " + receiver + f.signature.name + "(" + args + ") {}"
 }
 
 func (i *InterfaceDeclaration) toSastString() string {
