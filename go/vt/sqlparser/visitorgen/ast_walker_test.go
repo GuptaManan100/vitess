@@ -42,8 +42,7 @@ type Nodeiface interface {
 	result, _ := Walk(ast)
 	expected := SourceFile{
 		lines: []Sast{&InterfaceDeclaration{
-			name:  "Nodeiface",
-			block: "",
+			name: "Nodeiface",
 		}},
 	}
 	assert.Equal(t, expected.String(), result.String())

@@ -35,8 +35,8 @@ func TestSimplestAst(t *testing.T) {
 	input := &SourceFile{
 		lines: []Sast{
 			&InterfaceDeclaration{
-				name:  "NodeInterface",
-				block: "// an interface lives here"},
+				name: "NodeInterface",
+			},
 			&StructDeclaration{
 				name:   "NodeStruct",
 				fields: []*Field{}},

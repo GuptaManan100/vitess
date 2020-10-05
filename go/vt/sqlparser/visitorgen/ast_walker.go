@@ -54,8 +54,7 @@ func (w *walker) Visit(node ast.Node) ast.Visitor {
 				}
 			}
 			w.append(&InterfaceDeclaration{
-				name:  n.Name.Name,
-				block: "",
+				name: n.Name.Name,
 			})
 		case *ast.StructType:
 			var fields []*Field

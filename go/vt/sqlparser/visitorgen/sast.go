@@ -32,7 +32,7 @@ type (
 	// InterfaceDeclaration represents a declaration of an interface. This is used to keep track of which types
 	// need to be handled by the visitor framework
 	InterfaceDeclaration struct {
-		name, block string
+		name string
 	}
 
 	// TypeAlias is used whenever we see a `type XXX YYY` - XXX is the new name for YYY.
@@ -133,7 +133,7 @@ func (f *FuncDeclaration) toSastString() string {
 }
 
 func (i *InterfaceDeclaration) toSastString() string {
-	return "type " + i.name + " interface {" + blockInNewLines(i.block) + "}"
+	return "type " + i.name + " interface {}"
 }
 
 func (a *TypeAlias) toSastString() string {
