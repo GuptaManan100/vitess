@@ -6,13 +6,49 @@
     }
   },
   "tables": {
-    "user": {
+    "users": {
       "column_vindexes": [{
-        "column": "created_at",
+        "column": "id",
         "name": "binary_md5"
       }],
       "columns": [{
         "name": "created_at",
+        "type": "DATETIME"
+      }, {
+        "name": "id",
+        "type": "INT64"
+      }, {
+        "name": "name",
+        "type": "VARCHAR"
+      }, {
+        "name": "email",
+        "type": "VARCHAR"
+      }, {
+        "name": "updated_at",
+        "type": "DATETIME"
+      }, {
+        "name": "password_digest",
+        "type": "VARCHAR"
+      }, {
+        "name": "remember_digest",
+        "type": "VARCHAR"
+      }, {
+        "name": "admin",
+        "type": "INT8"
+      }, {
+        "name": "activation_digest",
+        "type": "VARCHAR"
+      }, {
+        "name": "activated",
+        "type": "INT8"
+      }, {
+        "name": "activated_at",
+        "type": "DATETIME"
+      }, {
+        "name": "reset_digest",
+        "type": "VARCHAR"
+      }, {
+        "name": "reset_sent_at",
         "type": "DATETIME"
       }],
       "column_list_authoritative": true
