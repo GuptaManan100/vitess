@@ -1,0 +1,21 @@
+{
+  "sharded": true,
+  "vindexes": {
+    "binary_md5": {
+      "type": "binary_md5"
+    }
+  },
+  "tables": {
+    "user": {
+      "column_vindexes": [{
+        "column": "created_at",
+        "name": "binary_md5"
+      }],
+      "columns": [{
+        "name": "created_at",
+        "type": "DATETIME"
+      }],
+      "column_list_authoritative": true
+    }
+  }
+}
