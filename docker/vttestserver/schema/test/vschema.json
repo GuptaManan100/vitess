@@ -52,6 +52,28 @@
         "type": "DATETIME"
       }],
       "column_list_authoritative": true
+    }, "microposts": {
+      "column_vindexes": [{
+        "column": "user_id",
+        "name": "binary_md5"
+      }],
+      "columns": [{
+        "name": "created_at",
+        "type": "DATETIME"
+      }, {
+        "name": "id",
+        "type": "INT64"
+      }, {
+        "name": "user_id",
+        "type": "INT64"
+      }, {
+        "name": "updated_at",
+        "type": "DATETIME"
+      }, {
+        "name": "content",
+        "type": "VARCHAR"
+      }],
+      "column_list_authoritative": true
     }
   }
 }
