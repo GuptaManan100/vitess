@@ -400,6 +400,7 @@ func (qre *QueryExecutor) execDDL(conn *StatefulConnection) (*sqltypes.Result, e
 			return nil, err
 		}
 	}
+	log.Errorf("DDL executed on shard: %s", sql)
 	result, err := qre.execStatefulConn(conn, sql, true)
 	if err != nil {
 		return nil, err
@@ -656,6 +657,7 @@ func (qre *QueryExecutor) txFetch(conn *StatefulConnection, record bool) (*sqlty
 	if err != nil {
 		return nil, err
 	}
+	log.Errorf("Fetch executed on shard:\n%s\nresults:\n%v\n\n", sql, qr.Rows)
 	// Only record successful queries.
 	if record {
 		conn.TxProperties().RecordQuery(sql)
