@@ -74,6 +74,63 @@
         "type": "VARCHAR"
       }],
       "column_list_authoritative": true
+    }, "user111s": {
+      "column_vindexes": [{
+        "column": "id",
+        "name": "binary_md5"
+      }],
+      "columns": [{
+        "name": "created_at",
+        "type": "DATETIME"
+      }, {
+        "name": "id",
+        "type": "INT64"
+      }, {
+        "name": "updated_at",
+        "type": "DATETIME"
+      }, {
+        "name": "name",
+        "type": "VARCHAR"
+      }],
+      "column_list_authoritative": true
+    }, "employee1s": {
+      "column_vindexes": [{
+        "column": "company1_id",
+        "name": "binary_md5"
+      }],
+      "columns": [{
+        "name": "created_at",
+        "type": "DATETIME"
+      }, {
+        "name": "id",
+        "type": "INT64"
+      }, {
+        "name": "company1_id",
+        "type": "INT64"
+      }, {
+        "name": "updated_at",
+        "type": "DATETIME"
+      }],
+      "column_list_authoritative": true
+    }, "user114s": {
+      "column_vindexes": [{
+        "column": "id",
+        "name": "binary_md5"
+      }],
+      "columns": [{
+        "name": "created_at",
+        "type": "DATETIME"
+      }, {
+        "name": "id",
+        "type": "INT64"
+      }, {
+        "name": "updated_at",
+        "type": "DATETIME"
+      }, {
+        "name": "name",
+        "type": "VARCHAR"
+      }],
+      "column_list_authoritative": true
     }
   }
 }
