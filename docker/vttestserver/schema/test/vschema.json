@@ -131,6 +131,76 @@
         "type": "VARCHAR"
       }],
       "column_list_authoritative": true
+    }, "assemblies": {
+      "column_vindexes": [{
+        "column": "id",
+        "name": "binary_md5"
+      }],
+      "columns": [{
+        "name": "created_at",
+        "type": "DATETIME"
+      }, {
+        "name": "id",
+        "type": "INT64"
+      }, {
+        "name": "updated_at",
+        "type": "DATETIME"
+      }, {
+        "name": "name",
+        "type": "VARCHAR"
+      }],
+      "column_list_authoritative": true
+    }, "assembly2s": {
+      "column_vindexes": [{
+        "column": "id",
+        "name": "binary_md5"
+      }],
+      "columns": [{
+        "name": "created_at",
+        "type": "DATETIME"
+      }, {
+        "name": "id",
+        "type": "INT64"
+      }, {
+        "name": "updated_at",
+        "type": "DATETIME"
+      }],
+      "column_list_authoritative": true
+    } , "assembly3s": {
+      "column_vindexes": [{
+        "column": "id",
+        "name": "binary_md5"
+      }],
+      "columns": [{
+        "name": "created_at",
+        "type": "DATETIME"
+      }, {
+        "name": "id",
+        "type": "INT64"
+      }, {
+        "name": "updated_at",
+        "type": "DATETIME"
+      }],
+      "column_list_authoritative": true
+    }, "assembly4s": {
+      "column_vindexes": [{
+        "column": "id",
+        "name": "binary_md5"
+      }],
+      "columns": [{
+        "name": "created_at",
+        "type": "DATETIME"
+      }, {
+        "name": "id",
+        "type": "INT64"
+      }, {
+        "name": "updated_at",
+        "type": "DATETIME"
+      }, {
+        "name": "name",
+        "type": "VARCHAR"
+      }],
+      "column_list_authoritative": true
     }
   }
 }
