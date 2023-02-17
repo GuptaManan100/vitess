@@ -20,3 +20,5 @@
 source ../common/env.sh
 
 vtctlclient MoveTables -- --tablet_types=rdonly,replica SwitchTraffic customer.commerce2customer
+
+
