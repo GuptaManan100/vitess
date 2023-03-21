@@ -1,4 +1,10 @@
 # Add 'bug' label to all PRs
-bug: '/**/*'
-documentation: '**/*'
-duplicate: '**'
+bug:
+  - '**/*'
+  - '*'
+  - '.github/**/*'
+documentation:
+  - '**/*'
+duplicate:
+  - '/**/*'
+  - '*'
