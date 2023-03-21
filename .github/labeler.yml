@@ -1,2 +1,2 @@
 # Add 'bug' label to all PRs
-bug: '*'
+bug: '/**/*'
