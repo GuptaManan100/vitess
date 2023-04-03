@@ -26,6 +26,7 @@ jobs:
           else
             echo 'The "bug" label is not set.'
             gh pr edit ${{ github.event.pull_request.number }} --add-label 'invalid'
+            fail 'The "invalid" label is set.'
           fi
 
       - name: Fail PRs
