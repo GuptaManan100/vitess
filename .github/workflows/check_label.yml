@@ -34,6 +34,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          echo ${{ github.event.action }} ${{ github.event.name }}
           if [[ "${{contains( github.event.pull_request.labels.*.name, 'invalid')}}" == "true" ]]; then
             echo 'The "invalid" label is set.'
             exit 1
