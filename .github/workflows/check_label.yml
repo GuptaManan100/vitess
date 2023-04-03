@@ -27,7 +27,7 @@ jobs:
         run: |
           if [[ "${{contains( github.event.pull_request.labels.*.name, 'bug')}}" == "true" ]]; then
             echo 'The "bug" label is set.'
-            return 0
+            exit 0
           fi
           if [[ "${{contains( github.event.pull_request.labels.*.name, 'inv')}}" == "true" ]]; then
             echo 'The "inv" label is set.'
