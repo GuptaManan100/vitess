@@ -25,6 +25,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          if [[ "${{contains( github.event.pull_request.labels.*.name, 'bug')}}" == "true" ]]; then
+            echo 'The "bug" label is set.'
+            return 1
+          fi
           if [[ "${{contains( github.event.pull_request.labels.*.name, 'inv')}}" == "true" ]]; then
             echo 'The "inv" label is set.'
             gh pr edit ${{ github.event.pull_request.number }} --add-label 'bug'
