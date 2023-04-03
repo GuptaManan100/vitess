@@ -1,31 +1,37 @@
-name: Check Pull Request labels
+name: Test PRs
 on:
   pull_request:
     types: [opened, labeled, unlabeled, synchronize, reopened]
 
 concurrency:
-  group: format('{0}-{1}', ${{ github.ref }}, 'Check Pull Request labels')
+  group: format('{0}-{1}', ${{ github.ref }}, 'Test PRs')
   cancel-in-progress: true
 
 jobs:
-  check_pull_request_labels:
-    name: Check Pull Request labels
+  prevent_direct_prs:
+    name: Test PRs
     timeout-minutes: 10
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-labels
     steps:
-      - name: Set up Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: 1.20.2
-
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Backport labels
+      - name: Add initial labels
+        if: ${{ contains(fromJSON('["opened", "reopened", "synchronize"]'), github.event.action) }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if [[ "${{contains( github.event.pull_request.labels.*.name, 'inv')}}" == "true" ]]; then
-            echo 'The "inv" label is set.'
-            gh pr edit ${{ github.event.pull_request.number }} --add-label 'bug'
+          if [[ "${{contains( github.event.pull_request.labels.*.name, 'bug')}}" == "true" ]]; then
+            echo 'The "bug" label is set.'
+          else
+            echo 'The "bug" label is not set.'
+            gh pr edit ${{ github.event.pull_request.number }} --add-label 'invalid'
+          fi
+
+      - name: Fail PRs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [[ "${{contains( github.event.pull_request.labels.*.name, 'invalid')}}" == "true" ]]; then
+            fail 'The "invalid" label is set.'
           fi
