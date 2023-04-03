@@ -21,6 +21,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          echo ${{ github.event.action }} ${{ github.event_name }}
           if [[ "${{contains( github.event.pull_request.labels.*.name, 'bug')}}" == "true" ]]; then
             echo 'The "bug" label is set.'
           else
@@ -34,7 +35,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo ${{ github.event.action }} ${{ github.event.name }}
+          echo ${{ github.event.action }} ${{ github.event_name }}
           if [[ "${{contains( github.event.pull_request.labels.*.name, 'invalid')}}" == "true" ]]; then
             echo 'The "invalid" label is set.'
             exit 1
