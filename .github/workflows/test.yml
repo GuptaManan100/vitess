@@ -7,8 +7,6 @@ concurrency:
   group: format('{0}-{1}', ${{ github.ref }}, 'Auto Approval')
   cancel-in-progress: true
 
-permissions: read-all
-
 jobs:
   auto_approve:
     name: Auto Approve PRs
