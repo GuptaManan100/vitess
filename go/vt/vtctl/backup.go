@@ -158,6 +158,7 @@ func commandListBackups(ctx context.Context, wr *wrangler.Wrangler, subFlags *pf
 	}
 	for _, bh := range bhs {
 		wr.Logger().Printf("%v\n", bh.Name())
+		wr.Logger().Printf("Tesing")
 	}
 	return nil
 }
