@@ -14,5 +14,5 @@ jobs:
 
       - name: Test initial labels
         run: |
-          echo -e "${{ toJSON(github.event.pull_request.labels) }}"
+          echo -e '${{ toJSON(github.event.pull_request.labels) }}'
           echo ${{contains( github.event.pull_request.labels.*.name, 'Bug')}}
