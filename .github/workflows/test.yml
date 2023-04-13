@@ -13,6 +13,8 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Test initial labels
+        env:
+          TEST: ${{ toJSON(github.event.pull_request.labels) }}
         run: |
-          echo -e '${{ toJSON(github.event.pull_request.labels) }}'
+          echo -e "$TEST"
           echo ${{contains( github.event.pull_request.labels.*.name, 'Bug')}}
