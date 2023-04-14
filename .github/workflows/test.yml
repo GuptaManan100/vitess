@@ -18,3 +18,4 @@ jobs:
         run: |
           echo -e "$TEST"
           echo ${{contains( github.event.pull_request.labels.*.name, 'Bug')}}
+          echo ${{ github.event.pull_request.user.login == 'GuptaManan100' }}
